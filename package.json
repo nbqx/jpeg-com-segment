@@ -1,0 +1,25 @@
+{
+  "name": "jpeg-com-segment",
+  "description": "read/write COM segment in jpeg format.",
+  "version": "0.0.1",
+  "author": "nbqx",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nbqx/jpeg-com-segment.git"
+  },
+  "homepage": "https://github.com/nbqx/jpeg-com-segment",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "buffer-indexof": "0.0.2",
+    "buffer-split": "0.0.0",
+    "through2": "^0.6.5"
+  },
+  "devDependencies": {
+    "tap-colorize": "^1.2.0",
+    "tape": "^4.0.0"
+  }
+}
