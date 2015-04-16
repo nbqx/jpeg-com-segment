@@ -1,62 +1,50 @@
-var through = require('through2');
+var through = require('through2'),
+    es = require('event-stream');
+
 var com = require('../');
 
-// ブラウザとnodeでbufferのよみこんだlengthがちがう
+function load(){
+  var fns = Array.prototype.slice.call(arguments),
+      xhr = new XMLHttpRequest();
 
-var dbg = function(){
-  var buf = [];
-  return through(function(chunk,enc,cb){
-    // console.log(chunk);
-    this.push(chunk);
-    buf.push(chunk);
-    cb();
-  },function(cb){
-    console.log(buf)
-    cb();
-  });
+  xhr.open('GET', '/browser/test.jpg',true),
+  xhr.responseType = 'arraybuffer';
+  xhr.onload = function(){
+    if(this.status==200){
+      var a = new Uint8Array(this.response);
+
+      fns.forEach(function(f){
+        f.apply(null,[a]);
+      });
+    }
+  };
+  xhr.send();
 };
 
-// var img = new Image();
-// img.id = 'my-img';
-// img.src = '/browser/test.jpg';
-// document.body.appendChild(img);
+load(
+  function renderImage(a){
+    var blob = new Blob([a], {type:'image/jpeg'});
+    var URL = window.URL || window.webkitURL,
+        img = new Image();
+    img.src = URL.createObjectURL(blob);
+    document.body.appendChild(img);
+  },
+  function getComment(a){
+    // `a` is not Buffer and cannot use `pipe` in browserify.
+    var bf = (Buffer.isBuffer(a))? a : new Buffer(a);
 
-// var xhr = new XMLHttpRequest();
-// xhr.open('GET','/browser/test.jpg',true);
-// xhr.responseType = 'arraybuffer';
-// xhr.onload = function(){
-//   if(this.status==200){
-//     var a = new Uint8Array(this.response);
-//     var blob = new Blob([a],{type: 'image/jpeg'});
+    // buffer to stream
+    es.readable(function(){
+      this.emit('data',bf);
+      this.emit('end');
+    })
+      .pipe(com.read())
+      .on('data',function(data){
+        var comment = decodeURIComponent(data+''),
+            elm = document.createElement('h1');
+        elm.innerText = comment;
+        document.body.appendChild(elm);
+      })
+  }
+);
 
-//     var URL = window.URL || window.webkitURL;
-//     var img =  new Image();
-//     img.src = URL.createObjectURL(blob);
-//     document.body.appendChild(img);
-//   }
-// };
-// xhr.send();
-
-var http = require('http');
-var d = [],
-    img = new Image();
-http.get({path:'/browser/test.jpg'},function(res){
-  res
-    .pipe(com.read())
-    // .pipe(dbg())
-    .on('data',function(data){
-      // console.log(data);
-      // console.log(data+'');
-    }).on('end',function(){
-      // var a = new Uint8Array(d),
-      //     blob = new Blob([a],{type:'image/jpeg'});
-      // var URL = window.URL || window.webkitURL;
-      // img.src = URL.createObjectURL(blob);
-      // document.body.appendChild(img);
-      console.log('end!');
-    });
-});
-
-// no problem
-// var b = new Buffer([0xff,0xfe]);
-// console.log(b);

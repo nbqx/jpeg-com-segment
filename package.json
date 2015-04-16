@@ -16,11 +16,11 @@
   "license": "MIT",
   "dependencies": {
     "buffer-indexof": "0.0.2",
-    "buffer-split": "0.0.0",
-    "through2": "^0.6.5"
+    "buffer-split": "0.0.0"
   },
   "devDependencies": {
     "beefy": "^2.1.5",
+    "event-stream": "^3.3.0",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0"
   }
