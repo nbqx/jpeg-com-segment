@@ -30,10 +30,17 @@ fs.createReadStream(__dirname+'/test/fixtures/test.jpg')
   .pipe(fs.createWriteStream('out.jpg'));
 ```
 
+and works in [browserify](http://browserify.org/). see detail in `browser/index.js`.
+
+`$ npm install`
+
+then
+
+`$ npm run browser`
+
+then see [http://127.0.0.1:9966](http://127.0.0.1:9966)
+
 ## tips
 
 if you want to show COM comment, try `$ identify -verbose xxx.jpg`
 
-## todo
-
-works in browserify
