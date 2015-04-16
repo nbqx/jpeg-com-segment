@@ -34,9 +34,10 @@ load(
     var bf = (Buffer.isBuffer(a))? a : new Buffer(a);
 
     // buffer to stream
-    es.readable(function(){
+    es.readable(function(count,cb){
       this.emit('data',bf);
       this.emit('end');
+      cb();
     })
       .pipe(com.read())
       .on('data',function(data){
