@@ -1,7 +1,7 @@
 {
   "name": "jpeg-com-segment",
   "description": "read/write COM segment in jpeg format.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "nbqx",
   "repository": {
     "type": "git",
