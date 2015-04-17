@@ -11,7 +11,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js",
-    "browser": "beefy browser/index.js"
+    "browser": "beefy browser/index.js",
+    "browser2": "beefy browser/example-use-http-browserify.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -22,6 +23,7 @@
     "beefy": "^2.1.5",
     "event-stream": "^3.3.0",
     "tap-colorize": "^1.2.0",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "tee-stream": "0.0.1"
   }
 }
