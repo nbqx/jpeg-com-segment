@@ -30,13 +30,17 @@ fs.createReadStream(__dirname+'/test/fixtures/test.jpg')
   .pipe(fs.createWriteStream('out.jpg'));
 ```
 
-and works in [browserify](http://browserify.org/). see detail in `browser/index.js`.
+and works in [browserify](http://browserify.org/). see detail in `browser/index.js` or `browser/example-use-http-browserify.js`.
 
 `$ npm install`
 
 then
 
 `$ npm run browser`
+
+or
+
+`$ npm run browser2`
 
 then see [http://127.0.0.1:9966](http://127.0.0.1:9966)
 
